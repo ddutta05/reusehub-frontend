@@ -1,0 +1,116 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { MapPin, Clock, Star, Heart } from 'lucide-react';
+
+interface ItemCardProps {
+  item: {
+    id: string;
+    title: string;
+    price: number;
+    originalPrice?: number;
+    image: string;
+    condition: string;
+    category: string;
+    location: string;
+    timeAgo: string;
+    seller: {
+      name: string;
+      verified: boolean;
+    };
+  };
+}
+
+const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
+  const getConditionColor = (condition: string) => {
+    switch (condition.toLowerCase()) {
+      case 'like new':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'good':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'needs fixing':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    }
+  };
+
+  const discountPercentage = item.originalPrice 
+    ? Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)
+    : 0;
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
+      <div className="relative">
+        <Link to={`/item/${item.id}`}>
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </Link>
+        <button className="absolute top-3 right-3 p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <Heart className="h-4 w-4 text-gray-600 dark:text-gray-400 hover:text-red-500" />
+        </button>
+        {discountPercentage > 0 && (
+          <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-semibold">
+            {discountPercentage}% OFF
+          </div>
+        )}
+      </div>
+
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getConditionColor(item.condition)}`}>
+            {item.condition}
+          </span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            {item.category}
+          </span>
+        </div>
+
+        <Link to={`/item/${item.id}`}>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            {item.title}
+          </h3>
+        </Link>
+
+        <div className="flex items-center space-x-2 mb-3">
+          <span className="text-xl font-bold text-gray-900 dark:text-white">
+            ₹{item.price.toLocaleString()}
+          </span>
+          {item.originalPrice && (
+            <span className="text-sm text-gray-500 line-through">
+              ₹{item.originalPrice.toLocaleString()}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
+          <MapPin className="h-3 w-3 mr-1" />
+          <span className="mr-3">{item.location}</span>
+          <Clock className="h-3 w-3 mr-1" />
+          <span>{item.timeAgo}</span>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-1">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              {item.seller.name}
+            </span>
+            {item.seller.verified && (
+              <Star className="h-4 w-4 text-blue-500 fill-current" />
+            )}
+          </div>
+          <Link
+            to={`/item/${item.id}`}
+            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors"
+          >
+            View
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ItemCard;
