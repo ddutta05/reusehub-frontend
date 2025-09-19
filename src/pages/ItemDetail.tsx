@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Heart, Share2, MapPin, Clock, Star, MessageCircle, Flag, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Clock, Star, MessageCircle, Flag, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ItemDetail = () => {
   const { id } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isFavorited, setIsFavorited] = useState(false);
 
   const item = {
     id: '1',
@@ -154,19 +153,6 @@ This book has been my companion throughout my engineering degree and I'm passing
                 }`}>
                   {item.condition}
                 </span>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => setIsFavorited(!isFavorited)}
-                    className={`p-2 rounded-full transition-colors ${
-                      isFavorited ? 'bg-red-100 text-red-600' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
-                    }`}
-                  >
-                    <Heart className={`h-5 w-5 ${isFavorited ? 'fill-current' : ''}`} />
-                  </button>
-                  <button className="p-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                    <Share2 className="h-5 w-5" />
-                  </button>
-                </div>
               </div>
               
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
@@ -218,19 +204,24 @@ This book has been my companion throughout my engineering degree and I'm passing
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2">
+              <Link 
+                to={`/chat?seller=${item.seller.id}&item=${item.id}`}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
+              >
                 <MessageCircle className="h-5 w-5" />
                 <span>Contact Seller</span>
-              </button>
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+              </Link>
+              <Link 
+                to={`/chat?seller=${item.seller.id}&item=${item.id}&action=offer`}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center"
+              >
                 Make Offer
-              </button>
+              </Link>
             </div>
 
             {/* Item Stats */}
             <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
               <span>{item.views} views</span>
-              <span>{item.favorites} favorites</span>
               <button className="flex items-center space-x-1 text-red-600 hover:text-red-700">
                 <Flag className="h-4 w-4" />
                 <span>Report</span>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Calendar, MapPin, Star, MessageCircle, Flag, Shield, Package, Heart, Clock } from 'lucide-react';
+import { Calendar, MapPin, Star, MessageCircle, Flag, Shield, Package, Clock } from 'lucide-react';
 import ItemCard from '../components/ItemCard';
 
 const Profile = () => {
@@ -14,7 +14,6 @@ const Profile = () => {
     avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300',
     verified: true,
     joinDate: '2023-01-15',
-    lastSeen: '2 hours ago',
     department: 'Mechanical Engineering',
     year: '4th Year',
     studentId: '1901001',
@@ -158,10 +157,6 @@ const Profile = () => {
                 <div className="flex items-center">
                   <Calendar className="h-4 w-4 mr-1" />
                   <span>Joined {new Date(profile.joinDate).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
-                  <span>Last seen {profile.lastSeen}</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="h-4 w-4 mr-1" />

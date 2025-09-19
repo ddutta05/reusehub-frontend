@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Clock, Star, Heart } from 'lucide-react';
+import { MapPin, Clock, Star } from 'lucide-react';
 
 interface ItemCardProps {
   item: {
@@ -20,7 +20,7 @@ interface ItemCardProps {
   };
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
+const ItemCard: React.FC<ItemCardProps> = memo(({ item }) => {
   const getConditionColor = (condition: string) => {
     switch (condition.toLowerCase()) {
       case 'like new':
@@ -39,18 +39,16 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
     : 0;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
+    <Link
+      to={`/item/${item.id}`}
+      className="block bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group"
+    >
       <div className="relative">
-        <Link to={`/item/${item.id}`}>
-          <img
-            src={item.image}
-            alt={item.title}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        </Link>
-        <button className="absolute top-3 right-3 p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-          <Heart className="h-4 w-4 text-gray-600 dark:text-gray-400 hover:text-red-500" />
-        </button>
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
         {discountPercentage > 0 && (
           <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-semibold">
             {discountPercentage}% OFF
@@ -68,11 +66,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
           </span>
         </div>
 
-        <Link to={`/item/${item.id}`}>
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            {item.title}
-          </h3>
-        </Link>
+        <h3 className="font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          {item.title}
+        </h3>
 
         <div className="flex items-center space-x-2 mb-3">
           <span className="text-xl font-bold text-gray-900 dark:text-white">
@@ -101,16 +97,10 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
               <Star className="h-4 w-4 text-blue-500 fill-current" />
             )}
           </div>
-          <Link
-            to={`/item/${item.id}`}
-            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors"
-          >
-            View
-          </Link>
         </div>
       </div>
-    </div>
+    </Link>
   );
-};
+});
 
 export default ItemCard;

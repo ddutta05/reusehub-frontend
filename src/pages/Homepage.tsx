@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Laptop, Sofa, Bike, Shirt, Coffee, TrendingUp, Users, Recycle, Star, MapPin, Clock } from 'lucide-react';
+import { BookOpen, Laptop, Sofa, Bike, Shirt, Coffee, Users, Recycle } from 'lucide-react';
 import ItemCard from '../components/ItemCard';
 
 const Homepage = () => {
@@ -66,9 +65,7 @@ const Homepage = () => {
 
   const stats = [
     { label: 'Items Reused', value: '2,847', icon: Recycle, color: 'text-green-600' },
-    { label: 'Active Users', value: '1,234', icon: Users, color: 'text-blue-600' },
-    { label: 'CO₂ Saved', value: '4.2 tons', icon: TrendingUp, color: 'text-purple-600' },
-    { label: 'Money Saved', value: '₹3.2L', icon: Star, color: 'text-yellow-600' }
+    { label: 'Active Users', value: '1,234', icon: Users, color: 'text-blue-600' }
   ];
 
   return (
@@ -104,7 +101,7 @@ const Homepage = () => {
       {/* Stats Section */}
       <section className="py-12 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="flex justify-center gap-16">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="flex justify-center mb-2">
