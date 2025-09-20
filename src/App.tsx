@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import RouteGuard from './components/RouteGuard';
 import Homepage from './pages/Homepage';
 import SearchResults from './pages/SearchResults';
 import ItemDetail from './pages/ItemDetail';
@@ -8,6 +9,8 @@ import PostItem from './pages/PostItem';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
+import Verify from './pages/Verify';
+import AdminUsers from './pages/AdminUsers';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -20,13 +23,43 @@ function App() {
             <Navbar />
             <main>
               <Routes>
-                <Route path="/" element={<Homepage />} />
-                <Route path="/search" element={<SearchResults />} />
-                <Route path="/item/:id" element={<ItemDetail />} />
-                <Route path="/post" element={<PostItem />} />
-                <Route path="/profile/:userId" element={<Profile />} />
-                <Route path="/chat" element={<Chat />} />
+                <Route path="/" element={
+                  <RouteGuard requireVerified={true}>
+                    <Homepage />
+                  </RouteGuard>
+                } />
+                <Route path="/search" element={
+                  <RouteGuard requireVerified={true}>
+                    <SearchResults />
+                  </RouteGuard>
+                } />
+                <Route path="/item/:id" element={
+                  <RouteGuard requireVerified={true}>
+                    <ItemDetail />
+                  </RouteGuard>
+                } />
+                <Route path="/post" element={
+                  <RouteGuard requireVerified={true}>
+                    <PostItem />
+                  </RouteGuard>
+                } />
+                <Route path="/profile/:userId" element={
+                  <RouteGuard requireVerified={true}>
+                    <Profile />
+                  </RouteGuard>
+                } />
+                <Route path="/chat" element={
+                  <RouteGuard requireVerified={true}>
+                    <Chat />
+                  </RouteGuard>
+                } />
+                <Route path="/admin/users" element={
+                  <RouteGuard requireVerified={true} requireAdmin={true}>
+                    <AdminUsers />
+                  </RouteGuard>
+                } />
                 <Route path="/login" element={<Login />} />
+                <Route path="/verify" element={<Verify />} />
               </Routes>
             </main>
           </div>

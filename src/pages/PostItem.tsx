@@ -19,13 +19,8 @@ const PostItem = () => {
   const categories = [
     'Books',
     'Electronics',
-    'Furniture', 
-    'Vehicles',
+    'Home',
     'Clothing',
-    'Sports & Recreation',
-    'Musical Instruments',
-    'Appliances',
-    'Art & Crafts',
     'Other'
   ];
 
@@ -165,7 +160,7 @@ const PostItem = () => {
                 >
                   <option value="">Select a category</option>
                   {categories.map((cat) => (
-                    <option key={cat} value={cat.toLowerCase()}>{cat}</option>
+                    <option key={cat} value={cat}>{cat}</option>
                   ))}
                 </select>
               </div>
@@ -195,8 +190,7 @@ const PostItem = () => {
               {/* Price */}
               <div>
                 <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  <DollarSign className="inline h-4 w-4 mr-1" />
-                  Price (₹) *
+                  Price (৳) *
                 </label>
                 <input
                   type="number"
@@ -217,7 +211,7 @@ const PostItem = () => {
               {/* Original Price */}
               <div>
                 <label htmlFor="originalPrice" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Original Price (₹)
+                  Original Price (৳)
                 </label>
                 <input
                   type="number"

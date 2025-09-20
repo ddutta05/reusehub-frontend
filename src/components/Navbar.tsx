@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Menu, Heart, MessageCircle, User, Sun, Moon, Bell, Plus } from 'lucide-react';
+import { Search, Menu, Heart, MessageCircle, User, Sun, Moon, Bell, Plus, Settings } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -127,6 +127,16 @@ const Navbar = () => {
                       >
                         My Items
                       </Link>
+                      {user.isAdmin && (
+                        <Link
+                          to="/admin/users"
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <Settings className="inline h-4 w-4 mr-2" />
+                          Admin Panel
+                        </Link>
+                      )}
                       <button
                         onClick={() => {
                           logout();

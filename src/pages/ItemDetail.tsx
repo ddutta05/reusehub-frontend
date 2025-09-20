@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Clock, Star, MessageCircle, Flag, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
+import { formatTaka } from '../utils/currency';
 
 const ItemDetail = () => {
   const { id } = useParams();
@@ -12,13 +13,12 @@ const ItemDetail = () => {
       id: '1',
       title: 'Advanced Engineering Mathematics - 10th Edition by Erwin Kreyszig',
       price: 800,
-      originalPrice: 1200,
       images: [
         'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/694740/pexels-photo-694740.jpeg?auto=compress&cs=tinysrgb&w=800'
       ],
-      condition: 'Like New',
+      condition: 'like-new',
       category: 'Books',
       location: 'CUET Campus - Near Library',
       timeAgo: '2 hours ago',
@@ -53,12 +53,11 @@ This book has been my companion throughout my engineering degree and I'm passing
       id: '2',
       title: 'MacBook Air M1 - 13 inch (2020)',
       price: 85000,
-      originalPrice: 120000,
       images: [
         'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=800'
       ],
-      condition: 'Good',
+      condition: 'good',
       category: 'Electronics',
       location: 'Hall 5 - CUET',
       timeAgo: '5 hours ago',
@@ -93,12 +92,11 @@ Minor scratches on the lid but screen and keyboard are in excellent condition. B
       id: '3',
       title: 'Study Desk with Chair - Wooden',
       price: 3500,
-      originalPrice: 6000,
       images: [
         'https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=800'
       ],
-      condition: 'Good',
-      category: 'Furniture',
+      condition: 'good',
+      category: 'Home',
       location: 'Near Gate 2 - CUET',
       timeAgo: '1 day ago',
       description: `Solid wooden study desk with matching chair. Perfect for dorm rooms or study spaces. The desk has ample space for books, laptop, and study materials.
@@ -132,12 +130,11 @@ Some minor wear on the surface but structurally sound. Great for students who ne
       id: '4',
       title: 'Calculus and Analytical Geometry - Complete Set',
       price: 1200,
-      originalPrice: 1800,
       images: [
         'https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/694740/pexels-photo-694740.jpeg?auto=compress&cs=tinysrgb&w=800'
       ],
-      condition: 'Like New',
+      condition: 'like-new',
       category: 'Books',
       location: 'Library Area - CUET',
       timeAgo: '3 hours ago',
@@ -294,11 +291,14 @@ These books helped me ace my calculus courses. Perfect for Mechanical, Electrica
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  item.condition === 'Like New' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
-                  item.condition === 'Good' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                  item.condition === 'like-new' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
+                  item.condition === 'good' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                  item.condition === 'fair' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
                   'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
                 }`}>
-                  {item.condition}
+                  {item.condition === 'like-new' ? 'Like New' : 
+                   item.condition === 'good' ? 'Good' :
+                   item.condition === 'fair' ? 'Fair' : 'Needs Fixing'}
                 </span>
               </div>
               
@@ -308,18 +308,8 @@ These books helped me ace my calculus courses. Perfect for Mechanical, Electrica
               
               <div className="flex items-center space-x-4 mb-4">
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                  ₹{item.price.toLocaleString()}
+                  {formatTaka(item.price)}
                 </span>
-                {item.originalPrice && (
-                  <span className="text-lg text-gray-500 line-through">
-                    ₹{item.originalPrice.toLocaleString()}
-                  </span>
-                )}
-                {item.originalPrice && (
-                  <span className="px-2 py-1 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 text-sm font-semibold rounded">
-                    {Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)}% OFF
-                  </span>
-                )}
               </div>
 
               <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 space-x-4 mb-6">
@@ -478,10 +468,12 @@ These books helped me ace my calculus courses. Perfect for Mechanical, Electrica
                   </h3>
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-gray-900 dark:text-white">
-                      ₹{relatedItem.price.toLocaleString()}
+                      {formatTaka(relatedItem.price)}
                     </span>
                     <span className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
-                      {relatedItem.condition}
+                      {relatedItem.condition === 'like-new' ? 'Like New' : 
+                       relatedItem.condition === 'good' ? 'Good' :
+                       relatedItem.condition === 'fair' ? 'Fair' : 'Needs Fixing'}
                     </span>
                   </div>
                 </Link>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Filter, SlidersHorizontal, MapPin, Clock, Grid, List } from 'lucide-react';
 import ItemCard from '../components/ItemCard';
+import { formatTaka } from '../utils/currency';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -19,9 +20,8 @@ const SearchResults = () => {
       id: '1',
       title: 'Advanced Engineering Mathematics - 10th Edition',
       price: 800,
-      originalPrice: 1200,
       image: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Like New',
+      condition: 'like-new',
       category: 'Books',
       location: 'CUET Campus',
       timeAgo: '2 hours ago',
@@ -31,9 +31,8 @@ const SearchResults = () => {
       id: '2',
       title: 'MacBook Air M1 - 13 inch (2020)',
       price: 85000,
-      originalPrice: 120000,
       image: 'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Good',
+      condition: 'good',
       category: 'Electronics',
       location: 'Hall 5',
       timeAgo: '5 hours ago',
@@ -43,10 +42,9 @@ const SearchResults = () => {
       id: '3',
       title: 'Study Desk with Chair - Wooden',
       price: 3500,
-      originalPrice: 6000,
       image: 'https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Good',
-      category: 'Furniture',
+      condition: 'good',
+      category: 'Home',
       location: 'Near Gate 2',
       timeAgo: '1 day ago',
       seller: { name: 'Rafiq Islam', verified: false }
@@ -55,9 +53,8 @@ const SearchResults = () => {
       id: '4',
       title: 'iPhone 12 - 64GB Blue',
       price: 45000,
-      originalPrice: 65000,
       image: 'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Good',
+      condition: 'good',
       category: 'Electronics',
       location: 'CSE Building',
       timeAgo: '3 days ago',
@@ -67,9 +64,8 @@ const SearchResults = () => {
       id: '5',
       title: 'Digital Signal Processing Book',
       price: 600,
-      originalPrice: 900,
       image: 'https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Like New',
+      condition: 'like-new',
       category: 'Books',
       location: 'Library Area',
       timeAgo: '1 week ago',
@@ -79,10 +75,9 @@ const SearchResults = () => {
       id: '6',
       title: 'Gaming Chair - Ergonomic',
       price: 8000,
-      originalPrice: 12000,
       image: 'https://images.pexels.com/photos/4098369/pexels-photo-4098369.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Good',
-      category: 'Furniture',
+      condition: 'good',
+      category: 'Home',
       location: 'Hall 3',
       timeAgo: '2 days ago',
       seller: { name: 'Tamim Hassan', verified: true }
@@ -127,7 +122,7 @@ const SearchResults = () => {
                   />
                   <div className="flex justify-between text-sm text-gray-500">
                     <span>₹0</span>
-                    <span>₹{priceRange[1].toLocaleString()}</span>
+                    <span>{formatTaka(priceRange[1])}</span>
                   </div>
                 </div>
               </div>
@@ -175,7 +170,7 @@ const SearchResults = () => {
                   Categories
                 </label>
                 <div className="space-y-2">
-                  {['Books', 'Electronics', 'Furniture', 'Vehicles', 'Clothing', 'Other'].map((cat) => (
+                  {['Books', 'Electronics', 'Home', 'Clothing', 'Other'].map((cat) => (
                     <label key={cat} className="flex items-center">
                       <input
                         type="checkbox"

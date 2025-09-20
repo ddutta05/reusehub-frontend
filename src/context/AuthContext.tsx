@@ -7,6 +7,7 @@ interface User {
   avatar: string;
   verified: boolean;
   joinDate: string;
+  isAdmin: boolean;
 }
 
 interface AuthContextType {
@@ -27,7 +28,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email: 'sarah.ahmed@student.cuet.ac.bd',
       avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
       verified: true,
-      joinDate: '2024-01-15'
+      joinDate: '2024-01-15',
+      isAdmin: true
     };
   });
 
@@ -39,7 +41,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email: email,
       avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
       verified: true,
-      joinDate: '2024-01-15'
+      joinDate: '2024-01-15',
+      isAdmin: false
     });
   };
 

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { BookOpen, Laptop, Sofa, Bike, Shirt, Coffee, Users, Recycle } from 'lucide-react';
 import ItemCard from '../components/ItemCard';
+import { formatTaka } from '../utils/currency';
 
 const Homepage = () => {
   const categories = [
-    { id: 'books', name: 'Books', icon: BookOpen, color: 'bg-blue-500', count: 245 },
-    { id: 'electronics', name: 'Electronics', icon: Laptop, color: 'bg-purple-500', count: 89 },
-    { id: 'furniture', name: 'Furniture', icon: Sofa, color: 'bg-green-500', count: 67 },
-    { id: 'vehicles', name: 'Vehicles', icon: Bike, color: 'bg-yellow-500', count: 23 },
-    { id: 'clothing', name: 'Clothing', icon: Shirt, color: 'bg-pink-500', count: 156 },
-    { id: 'other', name: 'Other', icon: Coffee, color: 'bg-gray-500', count: 78 }
+    { id: 'Books', name: 'Books', icon: BookOpen, color: 'bg-blue-500', count: 245 },
+    { id: 'Electronics', name: 'Electronics', icon: Laptop, color: 'bg-purple-500', count: 89 },
+    { id: 'Home', name: 'Home', icon: Sofa, color: 'bg-green-500', count: 67 },
+    { id: 'Clothing', name: 'Clothing', icon: Shirt, color: 'bg-pink-500', count: 156 },
+    { id: 'Other', name: 'Other', icon: Coffee, color: 'bg-gray-500', count: 78 }
   ];
 
   const featuredItems = [
@@ -17,9 +17,8 @@ const Homepage = () => {
       id: '1',
       title: 'Advanced Engineering Mathematics - 10th Edition',
       price: 800,
-      originalPrice: 1200,
       image: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Like New',
+      condition: 'like-new',
       category: 'Books',
       location: 'CUET Campus',
       timeAgo: '2 hours ago',
@@ -29,9 +28,8 @@ const Homepage = () => {
       id: '2',
       title: 'MacBook Air M1 - 13 inch (2020)',
       price: 85000,
-      originalPrice: 120000,
       image: 'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Good',
+      condition: 'good',
       category: 'Electronics',
       location: 'Hall 5',
       timeAgo: '5 hours ago',
@@ -41,10 +39,9 @@ const Homepage = () => {
       id: '3',
       title: 'Study Desk with Chair - Wooden',
       price: 3500,
-      originalPrice: 6000,
       image: 'https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Good',
-      category: 'Furniture',
+      condition: 'good',
+      category: 'Home',
       location: 'Near Gate 2',
       timeAgo: '1 day ago',
       seller: { name: 'Rafiq Islam', verified: false }
@@ -53,9 +50,8 @@ const Homepage = () => {
       id: '4',
       title: 'Calculus and Analytical Geometry - Complete Set',
       price: 1200,
-      originalPrice: 1800,
       image: 'https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=300',
-      condition: 'Like New',
+      condition: 'like-new',
       category: 'Books',
       location: 'Library Area',
       timeAgo: '3 hours ago',

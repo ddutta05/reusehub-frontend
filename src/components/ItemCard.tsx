@@ -7,7 +7,6 @@ interface ItemCardProps {
     id: string;
     title: string;
     price: number;
-    originalPrice?: number;
     image: string;
     condition: string;
     category: string;
@@ -23,10 +22,12 @@ interface ItemCardProps {
 const ItemCard: React.FC<ItemCardProps> = memo(({ item }) => {
   const getConditionColor = (condition: string) => {
     switch (condition.toLowerCase()) {
-      case 'like new':
+      case 'like-new':
         return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
       case 'good':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'fair':
+        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
       case 'needs fixing':
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
       default:
@@ -34,9 +35,9 @@ const ItemCard: React.FC<ItemCardProps> = memo(({ item }) => {
     }
   };
 
-  const discountPercentage = item.originalPrice 
-    ? Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)
-    : 0;
+  const formatTaka = (amount: number): string => {
+    return `৳${amount.toLocaleString('en-BD')}`;
+  };
 
   return (
     <Link
@@ -49,11 +50,6 @@ const ItemCard: React.FC<ItemCardProps> = memo(({ item }) => {
           alt={item.title}
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        {discountPercentage > 0 && (
-          <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-semibold">
-            {discountPercentage}% OFF
-          </div>
-        )}
       </div>
 
       <div className="p-4">
@@ -72,13 +68,8 @@ const ItemCard: React.FC<ItemCardProps> = memo(({ item }) => {
 
         <div className="flex items-center space-x-2 mb-3">
           <span className="text-xl font-bold text-gray-900 dark:text-white">
-            ₹{item.price.toLocaleString()}
+            {formatTaka(item.price)}
           </span>
-          {item.originalPrice && (
-            <span className="text-sm text-gray-500 line-through">
-              ₹{item.originalPrice.toLocaleString()}
-            </span>
-          )}
         </div>
 
         <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
