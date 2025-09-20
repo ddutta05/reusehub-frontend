@@ -64,8 +64,8 @@ const Homepage = () => {
   ];
 
   const stats = [
-    { label: 'Items Reused', value: '2,847', icon: Recycle, color: 'text-green-600' },
-    { label: 'Active Users', value: '1,234', icon: Users, color: 'text-blue-600' }
+    { id: 'reused', label: 'Items Reused', value: '2,847', icon: Recycle, color: 'text-green-600' },
+    { id: 'users', label: 'Active Users', value: '1,234', icon: Users, color: 'text-blue-600' }
   ];
 
   return (
@@ -102,8 +102,8 @@ const Homepage = () => {
       <section className="py-12 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center gap-16">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+            {stats.map((stat) => (
+              <div key={stat.id} className="text-center">
                 <div className="flex justify-center mb-2">
                   <stat.icon className={`h-8 w-8 ${stat.color}`} />
                 </div>
