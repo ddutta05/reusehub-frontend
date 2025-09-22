@@ -14,8 +14,11 @@ const SearchResults = () => {
   const [priceRange, setPriceRange] = useState([0, 50000]);
   const [condition, setCondition] = useState('all');
   const [location, setLocation] = useState('all');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    category ? [category] : []
+  );
 
-  const mockResults = [
+  const allResults = [
     {
       id: '1',
       title: 'Advanced Engineering Mathematics - 10th Edition',
@@ -84,6 +87,38 @@ const SearchResults = () => {
     }
   ];
 
+  // Filter results based on all criteria
+  const filteredResults = allResults.filter(item => {
+    // Text search filter
+    const matchesQuery = !query || 
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.category.toLowerCase().includes(query.toLowerCase());
+    
+    // Category filter
+    const matchesCategory = selectedCategories.length === 0 || 
+      selectedCategories.includes(item.category);
+    
+    // Price filter
+    const matchesPrice = item.price >= priceRange[0] && item.price <= priceRange[1];
+    
+    // Condition filter
+    const matchesCondition = condition === 'all' || item.condition === condition;
+    
+    // Location filter (simplified for demo)
+    const matchesLocation = location === 'all' || 
+      item.location.toLowerCase().includes(location.toLowerCase());
+    
+    return matchesQuery && matchesCategory && matchesPrice && matchesCondition && matchesLocation;
+  });
+
+  // Handle category checkbox changes
+  const handleCategoryChange = (categoryName: string, checked: boolean) => {
+    if (checked) {
+      setSelectedCategories(prev => [...prev, categoryName]);
+    } else {
+      setSelectedCategories(prev => prev.filter(cat => cat !== categoryName));
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -93,7 +128,7 @@ const SearchResults = () => {
             {query ? `Search results for "${query}"` : category ? `${category.charAt(0).toUpperCase() + category.slice(1)}` : 'All Items'}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            {mockResults.length} items found
+            {filteredResults.length} items found
           </p>
         </div>
 
@@ -174,6 +209,8 @@ const SearchResults = () => {
                     <label key={cat} className="flex items-center">
                       <input
                         type="checkbox"
+                        checked={selectedCategories.includes(cat)}
+                        onChange={(e) => handleCategoryChange(cat, e.target.checked)}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">{cat}</span>
@@ -225,7 +262,41 @@ const SearchResults = () => {
 
             {/* Items Grid */}
             <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-              {mockResults.map((item) => (
+              {filteredResults.length > 0 ? (
+                filteredResults.map((item) => (
+                  <ItemCard key={item.id} item={item} />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-12">
+                  <div className="text-gray-400 mb-4">
+                    <Filter className="h-12 w-12 mx-auto" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    No items found
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Try adjusting your filters or search terms
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Load More - only show if there are results */}
+            {filteredResults.length > 0 && (
+              <div className="text-center mt-8">
+                <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">
+                  Load More Items
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SearchResults;
                 <ItemCard key={item.id} item={item} />
               ))}
             </div>
