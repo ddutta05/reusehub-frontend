@@ -5,11 +5,11 @@ import { formatTaka } from '../utils/currency';
 
 const Homepage = () => {
   const categories = [
-    { id: 'Books', name: 'Books', icon: BookOpen, color: 'bg-blue-500', count: 245 },
-    { id: 'Electronics', name: 'Electronics', icon: Laptop, color: 'bg-purple-500', count: 89 },
-    { id: 'Home', name: 'Home', icon: Sofa, color: 'bg-green-500', count: 67 },
-    { id: 'Clothing', name: 'Clothing', icon: Shirt, color: 'bg-pink-500', count: 156 },
-    { id: 'Other', name: 'Other', icon: Coffee, color: 'bg-gray-500', count: 78 }
+    { id: 'Books', name: 'Books', icon: BookOpen, color: 'bg-blue-500' },
+    { id: 'Electronics', name: 'Electronics', icon: Laptop, color: 'bg-purple-500' },
+    { id: 'Home', name: 'Home', icon: Sofa, color: 'bg-green-500' },
+    { id: 'Clothing', name: 'Clothing', icon: Shirt, color: 'bg-pink-500' },
+    { id: 'Other', name: 'Other', icon: Coffee, color: 'bg-gray-500' }
   ];
 
   const featuredItems = [
@@ -134,9 +134,6 @@ const Homepage = () => {
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
                   {category.name}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {category.count} items
-                </p>
               </Link>
             ))}
           </div>
