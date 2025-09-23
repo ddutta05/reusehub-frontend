@@ -10,8 +10,7 @@ const Chat = () => {
       id: '1',
       user: {
         name: 'Fatima Khan',
-        avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100',
-        status: 'online'
+        avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100'
       },
       lastMessage: 'Is the book still available?',
       lastMessageTime: '2 min ago',
@@ -26,8 +25,7 @@ const Chat = () => {
       id: '2',
       user: {
         name: 'Rafiq Islam',
-        avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100',
-        status: 'away'
+        avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100'
       },
       lastMessage: 'Can you meet at 3 PM near the library?',
       lastMessageTime: '1 hour ago',
@@ -42,8 +40,7 @@ const Chat = () => {
       id: '3',
       user: {
         name: 'Nadia Ahmed',
-        avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=100',
-        status: 'offline'
+        avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=100'
       },
       lastMessage: 'Thanks for the quick response!',
       lastMessageTime: '2 days ago',
@@ -126,14 +123,6 @@ const Chat = () => {
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      default: return 'bg-gray-400';
-    }
-  };
-
   return (
     <div className="h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Chat List Sidebar */}
@@ -186,14 +175,11 @@ const Chat = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-1">
                       <img
-                        src={conversation.item.image}
-                        alt=""
-                        className="w-4 h-4 rounded object-cover"
-                      />
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {conversation.item.title}
-                      </span>
-                    </div>
+                    <img
+                      src={conversation.user.avatar}
+                      alt={conversation.user.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
                     {conversation.unreadCount > 0 && (
                       <span className="bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {conversation.unreadCount}
@@ -213,21 +199,15 @@ const Chat = () => {
           {/* Chat Header */}
           <div className="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="relative">
-                <img
-                  src={selectedConversation.user.avatar}
-                  alt={selectedConversation.user.name}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800 ${getStatusColor(selectedConversation.user.status)}`} />
-              </div>
+              <img
+                src={selectedConversation.user.avatar}
+                alt={selectedConversation.user.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-white">
                   {selectedConversation.user.name}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {selectedConversation.user.status}
-                </p>
               </div>
             </div>
 
@@ -248,7 +228,7 @@ const Chat = () => {
           </div>
 
           {/* Item Info Card */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 border-b border-gray-200 dark:border-gray-700">
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-3">
               <img
                 src={selectedConversation.item.image}
@@ -319,7 +299,7 @@ const Chat = () => {
         <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
           <div className="text-center">
             <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="h-8 w-8 text-gray-400" />
+              <MessageCircle className="h-8 w-8 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
               Select a conversation
