@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Send, Paperclip, MoreVertical, Phone, Video, Info } from 'lucide-react';
+import { Search, Send, Paperclip, MoreVertical, Phone, Video, Info, MessageCircle } from 'lucide-react';
 
 const Chat = () => {
   const [selectedChat, setSelectedChat] = useState('1');
@@ -10,7 +10,8 @@ const Chat = () => {
       id: '1',
       user: {
         name: 'Fatima Khan',
-        avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100'
+        avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100',
+        status: 'online'
       },
       lastMessage: 'Is the book still available?',
       lastMessageTime: '2 min ago',
@@ -25,7 +26,8 @@ const Chat = () => {
       id: '2',
       user: {
         name: 'Rafiq Islam',
-        avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100'
+        avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100',
+        status: 'offline'
       },
       lastMessage: 'Can you meet at 3 PM near the library?',
       lastMessageTime: '1 hour ago',
@@ -40,7 +42,8 @@ const Chat = () => {
       id: '3',
       user: {
         name: 'Nadia Ahmed',
-        avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=100'
+        avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=100',
+        status: 'away'
       },
       lastMessage: 'Thanks for the quick response!',
       lastMessageTime: '2 days ago',
@@ -114,6 +117,15 @@ const Chat = () => {
 
   const selectedConversation = conversations.find(conv => conv.id === selectedChat);
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'online': return 'bg-green-500';
+      case 'away': return 'bg-yellow-500';
+      case 'offline': return 'bg-gray-400';
+      default: return 'bg-gray-400';
+    }
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim()) {
@@ -175,11 +187,14 @@ const Chat = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-1">
                       <img
-                    <img
-                      src={conversation.user.avatar}
-                      alt={conversation.user.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
+                        src={conversation.item.image}
+                        alt={conversation.item.title}
+                        className="w-6 h-6 rounded object-cover"
+                      />
+                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                        {conversation.item.title}
+                      </span>
+                    </div>
                     {conversation.unreadCount > 0 && (
                       <span className="bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {conversation.unreadCount}
