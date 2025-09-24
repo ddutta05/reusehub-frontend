@@ -15,7 +15,9 @@ const Navbar = () => {
       title: 'New message from Fatima Khan',
       message: 'Is the book still available?',
       time: '2 min ago',
-      read: false
+      read: false,
+      itemId: '1',
+      senderId: '124'
     },
     {
       id: '2',
@@ -23,7 +25,9 @@ const Navbar = () => {
       title: 'New offer received',
       message: 'Someone made an offer on your MacBook',
       time: '1 hour ago',
-      read: false
+      read: false,
+      itemId: '2',
+      senderId: '125'
     }
   ]);
   const { isDark, toggleTheme } = useTheme();
@@ -45,6 +49,23 @@ const Navbar = () => {
         notif.id === notificationId ? { ...notif, read: true } : notif
       )
     );
+  };
+
+  const handleNotificationItemClick = (notification: any) => {
+    // Mark as read
+    markAsRead(notification.id);
+    
+    // Close notifications dropdown
+    setShowNotifications(false);
+    
+    // Navigate based on notification type
+    if (notification.type === 'message') {
+      // Navigate to chat with the sender and item context
+      navigate(`/chat?seller=${notification.senderId}&item=${notification.itemId}`);
+    } else if (notification.type === 'offer') {
+      // Navigate to the item detail page
+      navigate(`/item/${notification.itemId}`);
+    }
   };
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -127,7 +148,7 @@ const Navbar = () => {
                           notifications.map((notification) => (
                             <div
                               key={notification.id}
-                              onClick={() => markAsRead(notification.id)}
+                              onClick={() => handleNotificationItemClick(notification)}
                               className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer ${
                                 !notification.read ? 'bg-blue-50 dark:bg-blue-900/20' : ''
                               }`}
