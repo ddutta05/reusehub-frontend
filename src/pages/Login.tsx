@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -13,11 +13,14 @@ const Login = () => {
     name: ''
   });
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLogin) {
       await login(formData.email, formData.password);
+      // Navigate to homepage after successful login
+      navigate('/');
     } else {
       // Handle registration
       console.log('Registration:', formData);
@@ -166,6 +169,34 @@ const Login = () => {
                     Forgot password?
                   </a>
                 </div>
+              </div>
+            )}
+
+            {/* Demo Login Credentials */}
+            {isLogin && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                  Demo Login Credentials
+                </h4>
+                <p className="text-xs text-blue-600 dark:text-blue-300 mb-3">
+                  Click below to auto-fill login credentials for demo purposes:
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setFormData({
+                    ...formData,
+                    email: 'demo.student@student.cuet.ac.bd',
+                    password: 'demo123'
+                  })}
+                  className="w-full text-left bg-white dark:bg-gray-800 border border-blue-300 dark:border-blue-600 rounded-md p-3 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                >
+                  <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    Email: demo.student@student.cuet.ac.bd
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Password: demo123
+                  </div>
+                </button>
               </div>
             )}
 

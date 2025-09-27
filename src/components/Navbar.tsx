@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Menu, Heart, MessageCircle, User, Sun, Moon, Bell, Plus, Settings } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -8,6 +8,8 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
   const [notifications, setNotifications] = useState([
     {
       id: '1',
@@ -33,6 +35,26 @@ const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Handle click outside dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setShowNotifications(false);
+      }
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (showNotifications || isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNotifications, isMenuOpen]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,7 +147,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Notifications */}
-                <div className="relative">
+                <div className="relative" ref={notificationRef}>
                   <button 
                     onClick={handleNotificationClick}
                     className="relative p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
@@ -209,7 +231,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Profile Dropdown */}
-                <div className="relative">
+                <div className="relative" ref={profileMenuRef}>
                   <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -239,6 +261,13 @@ const Navbar = () => {
                         onClick={() => setIsMenuOpen(false)}
                       >
                         My Items
+                      </Link>
+                      <Link
+                        to="/feedback"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Sales Feedback
                       </Link>
                       {user.isAdmin && (
                         <Link

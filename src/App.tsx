@@ -1,4 +1,3 @@
-import React, { useState, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import RouteGuard from './components/RouteGuard';
@@ -11,6 +10,7 @@ import Chat from './pages/Chat';
 import Login from './pages/Login';
 import Verify from './pages/Verify';
 import AdminUsers from './pages/AdminUsers';
+import Feedback from './pages/Feedback';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -51,6 +51,11 @@ function App() {
                 <Route path="/chat" element={
                   <RouteGuard requireVerified={true}>
                     <Chat />
+                  </RouteGuard>
+                } />
+                <Route path="/feedback" element={
+                  <RouteGuard requireVerified={true}>
+                    <Feedback />
                   </RouteGuard>
                 } />
                 <Route path="/admin/users" element={
